@@ -65,6 +65,9 @@ public class User implements UserDetails, Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Vendor vendor;
+
     public enum Role {
         USER,
         ADMIN,

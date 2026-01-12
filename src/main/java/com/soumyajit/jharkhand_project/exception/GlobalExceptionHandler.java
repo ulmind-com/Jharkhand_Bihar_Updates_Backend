@@ -39,6 +39,38 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(ex.getMessage()));
     }
 
+    // ✅ NEW: Vendor specific exceptions
+    @ExceptionHandler(VendorNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleVendorNotFoundException(VendorNotFoundException ex) {
+        log.error("Vendor not found: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    // ✅ NEW: Product specific exceptions
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleProductNotFoundException(ProductNotFoundException ex) {
+        log.error("Product not found: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    // ✅ NEW: Cart specific exceptions
+    @ExceptionHandler(CartException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCartException(CartException ex) {
+        log.error("Cart error: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    // ✅ NEW: Quota exceeded exception
+    @ExceptionHandler(QuotaExceededException.class)
+    public ResponseEntity<ApiResponse<Object>> handleQuotaExceededException(QuotaExceededException ex) {
+        log.error("Quota exceeded: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()
