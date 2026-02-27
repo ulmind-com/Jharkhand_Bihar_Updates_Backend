@@ -137,7 +137,7 @@ public class NotificationService {
   <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
     <div>
       <strong>Follow us:</strong>
-      <p>Stay connected with Jharkhand & Bihar Updates for the 
+      <p>Stay connected with Jharkhand Bihar Updates for the 
         latest updates, breaking news, and
         community stories from across all 24 districts.
       </p>
@@ -150,13 +150,13 @@ public class NotificationService {
     </div>
     <div>
       <strong>Contact us:</strong>
-      <p>📧 updatesjharkhandbihar@gmail.com/p>
+      <p>📧 support@jharkhandupdates.com/p>
       <p>📞 +91 99054 04064</p>
     </div>
   </div>
   <hr style="border:none; border-top:1px solid #ccc; margin-bottom:12px;" />
-  <p style="font-style: italic; color:#888;">Jharkhand & Bihar Updates<br />Connecting Jharkhand • Empowering Communities • Building Tomorrow</p>
-  <p style="font-size: 12px; color:#666;">© 2025 Jharkhand & Bihar Updates. All rights reserved.<br />Privacy Policy | Terms of Service | Unsubscribe</p>
+  <p style="font-style: italic; color:#888;">Jharkhand Bihar Updates<br />Connecting Jharkhand • Empowering Communities • Building Tomorrow</p>
+  <p style="font-size: 12px; color:#666;">© 2026 Jharkhand Bihar Updates. All rights reserved.<br />Privacy Policy | Terms of Service | Unsubscribe</p>
 </div>
 """;
 

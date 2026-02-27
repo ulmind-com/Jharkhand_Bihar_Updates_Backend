@@ -33,7 +33,7 @@ public class EmailService {
 
             helper.setTo(to);
             helper.setFrom(fromEmail);
-            helper.setSubject("Verify your email address - Jharkhand & Bihar Updates");
+            helper.setSubject("Verify your email address - Jharkhand Bihar Updates");
             helper.setText(buildOtpEmailTemplate(otp), true);
 
             mailSender.send(message);
@@ -51,7 +51,7 @@ public class EmailService {
 
             helper.setTo(to);
             helper.setFrom(fromEmail);
-            helper.setSubject("Welcome to Jharkhand & Bihar Updates! 🎉");
+            helper.setSubject("Welcome to Jharkhand Bihar Updates! 🎉");
             helper.setText(buildWelcomeEmailTemplate(firstName, lastName), true);
 
             mailSender.send(message);
@@ -68,7 +68,7 @@ public class EmailService {
 
             helper.setTo(to);
             helper.setFrom(fromEmail);
-            helper.setSubject("🔒 Password Reset - Jharkhand & Bihar Updates");
+            helper.setSubject("🔒 Password Reset - Jharkhand Bihar Updates");
             helper.setText(buildPasswordResetEmailTemplate(resetToken), true);
 
             mailSender.send(message);
@@ -85,7 +85,7 @@ public class EmailService {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Password Reset - Jharkhand & Bihar Updates</title>
+            <title>Password Reset - Jharkhand Bihar Updates</title>
         </head>
         <body style="margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: ##f8fafc;">
             
@@ -97,7 +97,7 @@ public class EmailService {
                         <span style="font-size: 36px;">🔒</span>
                     </div>
                     <h1 style="margin: 0; color: ##ffffff; font-size: 28px; font-weight: 700;">Password Reset</h1>
-                    <p style="margin: 8px 0 0 0; color: ##fecaca; font-size: 16px;">Jharkhand & Bihar Updates</p>
+                    <p style="margin: 8px 0 0 0; color: ##fecaca; font-size: 16px;">Jharkhand Bihar Updates</p>
                 </div>
                 
                 <!-- Content -->
@@ -107,7 +107,7 @@ public class EmailService {
                     </h2>
                     
                     <p style="margin: 0 0 25px 0; color: ##4b5563; font-size: 16px; line-height: 1.6;">
-                        We received a request to reset your password for your Jharkhand & Bihar Updates account. 
+                        We received a request to reset your password for your Jharkhand Bihar Updates account. 
                         Use the verification code below to set a new password.
                     </p>
                     
@@ -159,8 +159,8 @@ public class EmailService {
                 <!-- Footer -->
                 <div style="background: ##f9fafb; padding: 25px 35px; border-top: 1px solid ##e5e7eb; text-align: center;">
                     <p style="margin: 0 0 15px 0; color: ##6b7280; font-size: 12px;">
-                        This message was sent from Jharkhand & Bihar Updates security system.<br>
-                        © 2025 Jharkhand & Bihar Updates. All rights reserved.
+                        This message was sent from Jharkhand Bihar Updates security system.<br>
+                        © 2026 Jharkhand Bihar Updates. All rights reserved.
                     </p>
                     <p style="margin: 0; color: ##9ca3af; font-size: 11px;">
                         <a href="##" style="color: ##3b82f6; text-decoration: none;">Contact Support</a> | 
@@ -182,7 +182,7 @@ public class EmailService {
 
             helper.setTo(to);
             helper.setFrom(fromEmail);
-            helper.setSubject("✅ Password Successfully Reset - Jharkhand & Bihar Updates");
+            helper.setSubject("✅ Password Successfully Reset - Jharkhand Bihar Updates");
             helper.setText(buildPasswordResetConfirmationTemplate(to,firstName, lastName), true);
 
             mailSender.send(message);
@@ -199,7 +199,7 @@ public class EmailService {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Password Reset Successful - Jharkhand & Bihar Updates</title>
+            <title>Password Reset Successful - Jharkhand Bihar Updates</title>
         </head>
         <body style="margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: ##f8fafc;">
             
@@ -211,7 +211,7 @@ public class EmailService {
                         <span style="font-size: 36px;">✅</span>
                     </div>
                     <h1 style="margin: 0; color: ##ffffff; font-size: 28px; font-weight: 700;">Password Reset Successful</h1>
-                    <p style="margin: 8px 0 0 0; color: ##d1fae5; font-size: 16px;">Jharkhand & Bihar Updates</p>
+                    <p style="margin: 8px 0 0 0; color: ##d1fae5; font-size: 16px;">Jharkhand Bihar Updates</p>
                 </div>
                 
                 <!-- Content -->
@@ -247,8 +247,7 @@ public class EmailService {
                         <ul style="margin: 0; color: ##1e3a8a; font-size: 15px; line-height: 1.6; padding-left: 20px;">
                             <li style="margin-bottom: 8px;">You can now log in with your new password</li>
                             <li style="margin-bottom: 8px;">All your previous sessions have been logged out for security</li>
-                            <li style="margin-bottom: 8px;">Continue enjoying news, events, and job updates from Jharkhand</li>
-                            <li>Consider enabling two-factor authentication for extra security</li>
+                            <li style="margin-bottom: 8px;">Continue enjoying news, events, job, community updates from Jharkhand</li>
                         </ul>
                     </div>
                     
@@ -293,8 +292,8 @@ public class EmailService {
                                     Please contact our security team immediately.
                                 </p>
                                 <div style="margin-top: 12px;">
-                                    <a href="mailto:updatesjharkhandbihar@gmail.com" style="color: ##dc2626; text-decoration: none; font-weight: 600; margin-right: 15px;">
-                                        📧 updatesjharkhandbihar@gmail.com
+                                    <a href="mailto:support@jharkhandupdates.com" style="color: ##dc2626; text-decoration: none; font-weight: 600; margin-right: 15px;">
+                                        📧 support@jharkhandupdates.com
                                     </a>
                                     <a href="##" style="color: ##dc2626; text-decoration: none; font-weight: 600;">
                                         📞 +91 99054 04064
@@ -321,7 +320,7 @@ public class EmailService {
                 <!-- Footer -->
                 <div style="background: ##f3f4f6; padding: 30px 35px; border-top: 1px solid ##e5e7eb;">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 8px 0; color: ##1f2937; font-size: 18px; font-weight: 600;">Jharkhand Times</h3>
+                        <h3 style="margin: 0 0 8px 0; color: ##1f2937; font-size: 18px; font-weight: 600;">Jharkhand Bihar Updates</h3>
                         <p style="margin: 0; color: ##6b7280; font-size: 14px; font-style: italic;">
                             Connecting Jharkhand and Bihar • Empowering Communities • Building Tomorrow
                         </p>
@@ -339,7 +338,7 @@ public class EmailService {
                     <!-- Copyright -->
                     <div style="text-align: center; padding-top: 15px; border-top: 1px solid ##d1d5db;">
                         <p style="margin: 0 0 8px 0; color: ##4b5563; font-size: 12px;">
-                            © 2025 Mehkari Pvt Ltd. All rights reserved.
+                            © 2026 Jharkhand Bihar Updates . All rights reserved.
                         </p>
                         <p style="margin: 0; color: ##6b7280; font-size: 11px;">
                             <a href="##" style="color: ##3b82f6; text-decoration: none;">Privacy Policy</a> | 
@@ -371,7 +370,7 @@ public class EmailService {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Jharkhand & Bihar Updates</title>
+    <title>Welcome to Jharkhand Bihar Updates</title>
     <style>
         body {
             margin: 0;
@@ -730,14 +729,14 @@ public class EmailService {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Jharkhand & Bihar Updates</h1>
+            <h1>Jharkhand Bihar Updates</h1>
             <p>Your trusted digital gateway</p>
         </div>
 
         <div class="content">
             <div class="welcome-msg">
                 <h2>Hello %s %s! 👋</h2>
-                <p>Thank you for joining our growing community of <strong style="color: #2563eb;">50,000+</strong> readers! We're thrilled to have you as part of the Jharkhand Times family.</p>
+                <p>Thank you for joining our growing community of <strong style="color: #2563eb;">50,000+</strong> readers! We're thrilled to have you as part of the Jharkhand Bihar Updates family.</p>
             </div>
 
             <div class="badge">
@@ -746,8 +745,8 @@ public class EmailService {
             </div>
 
             <div class="about-section">
-                <h3>🌟 About Jharkhand & Bihar Updates</h3>
-                <p>Since 2020, we've been Jharkhand's and Bihar's premier digital news platform, serving authentic local news, events, job opportunities, and community stories across all 24 districts. Our mission is to keep you connected with what matters most in your region.</p>
+                <h3>🌟 About Jharkhand Bihar Updates</h3>
+                <p>Since 2018, we've been Jharkhand's and Bihar's premier digital news platform, serving authentic local news, events, job opportunities, and community stories across all 24 districts. Our mission is to keep you connected with what matters most in your region.</p>
                 <div class="stats">
                     <div>
                         <div class="number">24</div>
@@ -801,34 +800,34 @@ public class EmailService {
             </div>
 
             <div class="cta-buttons">
-                <a href="#" class="cta-button cta-secondary">🌐 Visit Website</a>
+                <a href="https://www.jharkhandbiharupdates.com" class="cta-button cta-secondary">🌐 Visit Website</a>
             </div>
 
             <div class="support-section">
                 <h4>🤝 Need Help? We're Here For You!</h4>
                 <p>Our dedicated support team is available 24/7 to assist you. Whether you have questions about features, need technical help, or want to share feedback - we're just one click away!</p>
                 <div>
-                    <a href="mailto:updatesjharkhandbihar@gmail.com">📧 Email Support</a>
+                    <a href="mailto:support@jharkhandupdates.com">📧 Email Support</a>
                     <span style="color:#cbd5e1; margin: 0 5px;">|</span>
                     <a href="#">💬 Live Chat</a>
                     <span style="color:#cbd5e1; margin: 0 5px;">|</span>
-                    <a href="#">📞 Call Us</a>
+                    <a href="9905404064">📞 Call Us</a>
                 </div>
             </div>
 
             <div class="social-media">
                 <p>Follow us for daily updates:</p>
                 <div class="social-icons">
-                                    <a href="#" class="twitter" aria-label="Twitter">
+                                    <a href="https://x.com/JhUpdate" class="twitter" aria-label="Twitter">
                                         <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="20" height="20">
                                     </a>
-                                    <a href="#" class="facebook" aria-label="Facebook">
+                                    <a href="https://www.facebook.com/JhUpdate" class="facebook" aria-label="Facebook">
                                         <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="20" height="20">
                                     </a>
-                                    <a href="#" class="instagram" aria-label="Instagram">
+                                    <a href="https://www.instagram.com/jhupdate/" class="instagram" aria-label="Instagram">
                                         <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" width="20" height="20">
                                     </a>
-                                    <a href="#" class="whatsapp" aria-label="WhatsApp">
+                                    <a href="https://whatsapp.com/channel/0029VafHItD1SWsuSX7xQA3P" class="whatsapp" aria-label="WhatsApp">
                                         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="20" height="20">
                                     </a>
                                 </div>
@@ -841,37 +840,37 @@ public class EmailService {
                 <div class="footer-section">
                     <h4>Follow us:</h4>
                     <p>
-                        Stay connected with Jharkhand & Bihar Updates for the latest updates, breaking news, and community stories from across all 24 districts.
+                        Stay connected with Jharkhand Bihar Updates for the latest updates, breaking news, and community stories from across all 24 districts.
                     </p>
                     <div class="social-icons">
-                                              <a href="#" class="twitter" aria-label="Twitter">
+                                              <a href="https://x.com/JhUpdate" class="twitter" aria-label="Twitter">
                                                   <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="20" height="20">
                                               </a>
-                                              <a href="#" class="facebook" aria-label="Facebook">
+                                              <a href="https://www.facebook.com/JhUpdate" class="facebook" aria-label="Facebook">
                                                   <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="20" height="20">
                                               </a>
-                                              <a href="#" class="instagram" aria-label="Instagram">
+                                              <a href="https://www.instagram.com/jhupdate/" class="instagram" aria-label="Instagram">
                                                   <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" width="20" height="20">
                                               </a>
-                                              <a href="#" class="whatsapp" aria-label="WhatsApp">
+                                              <a href="https://whatsapp.com/channel/0029VafHItD1SWsuSX7xQA3P" class="whatsapp" aria-label="WhatsApp">
                                                   <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="20" height="20">
                                               </a>
                                           </div>
                 </div>
                 <div class="footer-section">
                     <h4>Contact us:</h4>
-                    <p>📧 <a href="mailto:updatesjharkhandbihar@gmail.com">updatesjharkhandbihar@gmail.com</a></p>
+                    <p>📧 <a href="mailto:support@jharkhandupdates.com">support@jharkhandupdates.com</a></p>
                     <p>📞 +91 99054 04064</p>
                 </div>
             </div>
             <div class="footer-company">
-                Jharkhand & Bihar Updates<br>
+                Jharkhand Bihar Updates<br>
                 Connecting Jharkhand and Bihar • Empowering Communities • Building Tomorrow
             </div>
             <div class="footer-copyright">
-                &copy; 2025 Mehraki Pvt Ltd. All rights reserved.<br>
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms of Service</a> | 
+                &copy; 2026 Jharkhand Bihar Updates. All rights reserved.<br>
+                <a href="https://jharkhandupdates.com/privacy-policy">Privacy Policy</a> | 
+                <a href="https://jharkhandupdates.com/terms-conditions">Terms of Service</a> | 
                 <a href="#">Unsubscribe</a>
             </div>
         </div>
