@@ -18,7 +18,7 @@ public class OneSignalService {
     @Value("${onesignal.rest.api.key}")
     private String restApiKey;
 
-    private static final String ONESIGNAL_API_URL = "https://onesignal.com/api/v1/notifications";
+    private static final String ONESIGNAL_API_URL = "https://api.onesignal.com/notifications";
     private final OkHttpClient client = new OkHttpClient();
 
     @Async
