@@ -34,7 +34,7 @@ public class OneSignalService {
 
             JSONArray playerIds = new JSONArray();
             playerIds.put(playerId);
-            notification.put("include_player_ids", playerIds);
+            notification.put("include_subscription_ids", playerIds);
 
             JSONObject headings = new JSONObject();
             headings.put("en", title);
@@ -52,7 +52,7 @@ public class OneSignalService {
             Request request = new Request.Builder()
                     .url(ONESIGNAL_API_URL)
                     .post(body)
-                    .addHeader("Authorization", "Basic " + restApiKey)
+                    .addHeader("Authorization", "Key " + restApiKey)
                     .addHeader("Content-Type", "application/json")
                     .build();
 
