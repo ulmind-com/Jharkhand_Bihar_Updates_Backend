@@ -22,13 +22,15 @@ public class OneSignalService {
     private final OkHttpClient client = new OkHttpClient();
 
     @Async
-    public void sendNotification(String playerId, String title, String message) {
+    public void sendNotification(String playerId, String title, String message, Long referenceId, String referenceType) {
         if (playerId == null || playerId.isEmpty()) {
             log.warn("Cannot send notification: playerId is null or empty");
             return;
         }
 
         try {
+            log.info("🎯 Sending notification to playerId: {}", playerId);
+
             JSONObject notification = new JSONObject();
             notification.put("app_id", appId);
 
@@ -44,6 +46,48 @@ public class OneSignalService {
             contents.put("en", message);
             notification.put("contents", contents);
 
+            // 🎨 App branding
+            notification.put("large_icon", "https://res.cloudinary.com/duf6vxnbj/image/upload/jharkhand_app_logo");
+            notification.put("small_icon", "notification_icon");
+            notification.put("android_accent_color", "FF006A4E");
+            notification.put("android_visibility", 1);
+
+            // 🔗 Deep link data → App.js click handler reads additionalData.targetScreen + params
+            if (referenceId != null && referenceType != null) {
+                JSONObject additionalData = new JSONObject();
+                JSONObject params = new JSONObject();
+
+                switch (referenceType.toUpperCase()) {
+                    case "COMMUNITY_POST":
+                    case "COMMUNITY":
+                        additionalData.put("targetScreen", "CommunityPostDetails");
+                        params.put("postId", referenceId);
+                        break;
+                    case "JOB":
+                        additionalData.put("targetScreen", "JobDetails");
+                        params.put("jobId", referenceId);
+                        break;
+                    case "EVENT":
+                        additionalData.put("targetScreen", "EventDetails");
+                        params.put("eventId", referenceId);
+                        break;
+                    case "PROPERTY":
+                        additionalData.put("targetScreen", "PropertyDetails");
+                        params.put("propertyId", referenceId);
+                        break;
+                    case "LOCAL_NEWS":
+                    case "NEWS":
+                        additionalData.put("targetScreen", "StateNewsDetails");
+                        params.put("newsId", referenceId);
+                        break;
+                    default:
+                        additionalData.put("targetScreen", "Notifications");
+                }
+
+                additionalData.put("params", params);
+                notification.put("data", additionalData);
+            }
+
             RequestBody body = RequestBody.create(
                     notification.toString(),
                     MediaType.parse("application/json; charset=utf-8")
@@ -53,6 +97,7 @@ public class OneSignalService {
                     .url(ONESIGNAL_API_URL)
                     .post(body)
                     .addHeader("Authorization", "Key " + restApiKey)
+                    .addHeader("Accept", "application/json")
                     .addHeader("Content-Type", "application/json")
                     .build();
 

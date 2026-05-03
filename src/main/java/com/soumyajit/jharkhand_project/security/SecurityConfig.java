@@ -78,6 +78,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/properties/**").authenticated()
                         .requestMatchers("/api/v1/properties/**").permitAll()  // ✅ This is now AFTER inquiry matchers
 
+                        // AI Chat endpoints (authenticated users only)
+                        .requestMatchers("/ai/chat/**").authenticated()
+
+                        // External News (public)
+                        .requestMatchers("/api/v1/external-news/**").permitAll()
+
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

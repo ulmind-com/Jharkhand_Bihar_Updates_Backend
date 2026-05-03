@@ -8,7 +8,9 @@ import com.soumyajit.jharkhand_project.security.JwtUtils;
 import com.soumyajit.jharkhand_project.service.AuthService;
 import com.soumyajit.jharkhand_project.service.GeoIpService;
 import com.soumyajit.jharkhand_project.service.LoginHistoryService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +37,39 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
     private final LoginHistoryService loginHistoryService;
+
+    /**
+     * Entry point for mobile Google OAuth login.
+     * Sets a short-lived cookie so the success handler knows to redirect
+     * to the jharkhand:// deep-link scheme instead of the web URL.
+     */
+    @GetMapping("/mobile-google-start")
+    public void mobileGoogleStart(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(name = "redirect", required = false, defaultValue = "jharkhand://auth") String redirectUri
+    ) throws IOException {
+        // Store the app's redirect URI in a short-lived cookie
+        // In Expo Go: exp://192.168.x.x:8081/--/auth
+        // In production: jharkhand://auth
+        Cookie mobileCookie = new Cookie("MOBILE_AUTH_REDIRECT", redirectUri);
+        mobileCookie.setMaxAge(600);
+        mobileCookie.setPath("/");
+        mobileCookie.setHttpOnly(true);
+        mobileCookie.setSecure(true);
+        response.addCookie(mobileCookie);
+
+        // Redirect to Spring Security Google OAuth — respect Cloudflare HTTPS
+        String forwardedProto = request.getHeader("X-Forwarded-Proto");
+        String scheme = (forwardedProto != null && !forwardedProto.isEmpty()) ? forwardedProto : request.getScheme();
+        String contextPath = request.getContextPath();
+        String host = request.getHeader("X-Forwarded-Host");
+        if (host == null || host.isEmpty()) host = request.getServerName();
+        String targetUrl = scheme + "://" + host + contextPath + "/oauth2/authorization/google";
+        response.sendRedirect(targetUrl);
+        log.info("[MobileAuth] Started Google OAuth → redirect after auth: {}", redirectUri);
+    }
+
 
     @PostMapping("/send-otp")
     public ResponseEntity<?> sendOtp(@Valid @RequestBody SendOtpRequest request) {

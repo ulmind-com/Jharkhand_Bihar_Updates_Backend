@@ -56,7 +56,9 @@ public class NotificationService {
                 oneSignalService.sendNotification(
                         fullUser.getOnesignalPlayerId(),
                         "New Notification",
-                        message
+                        message,
+                        referenceId,
+                        referenceType
                 );
             }
         } catch (Exception e) {

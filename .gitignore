@@ -39,3 +39,6 @@ src/main/resources/application-dev.properties
 src/main/resources/application-dev.yml
 src/main/resources/application-prod.properties
 src/main/resources/application-prod.yml
+
+### Temp Test Folders ###
+temp_db_test/node_modules/
