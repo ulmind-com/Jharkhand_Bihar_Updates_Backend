@@ -201,6 +201,7 @@ public class RssFeedService {
         String description = getElementText(itemEl, "description");
         String pubDateStr = getElementText(itemEl, "pubDate");
 
+        String rawDescription = description; // Save raw HTML for image extraction
         // Clean HTML from description
         if (description != null) {
             description = description.replaceAll("<[^>]*>", "").trim();
@@ -232,8 +233,12 @@ public class RssFeedService {
                     imageUrl = getEnclosureImageUrl(itemEl);
                 }
                 if (imageUrl == null || imageUrl.isEmpty()) {
-                    // Try extracting <img src="..."> from description HTML
-                    imageUrl = extractImageFromHtml(description);
+                    // Try <thumbimage> (used by Sangbad Pratidin)
+                    imageUrl = getElementText(itemEl, "thumbimage");
+                }
+                if (imageUrl == null || imageUrl.isEmpty()) {
+                    // Try extracting <img src="..."> from raw HTML description
+                    imageUrl = extractImageFromHtml(rawDescription);
                 }
                 // Author from <dc:creator>
                 author = getElementTextNS(itemEl, "http://purl.org/dc/elements/1.1/", "creator");
@@ -325,6 +330,15 @@ public class RssFeedService {
         if (mediaNodes.getLength() > 0) {
             Element mediaEl = (Element) mediaNodes.item(0);
             String url = mediaEl.getAttribute("url");
+            if (url != null && !url.isEmpty()) {
+                return url;
+            }
+        }
+        // Try media:thumbnail (used by ABP Live)
+        NodeList thumbNodes = parent.getElementsByTagNameNS("http://search.yahoo.com/mrss/", "thumbnail");
+        if (thumbNodes.getLength() > 0) {
+            Element thumbEl = (Element) thumbNodes.item(0);
+            String url = thumbEl.getAttribute("url");
             if (url != null && !url.isEmpty()) {
                 return url;
             }
