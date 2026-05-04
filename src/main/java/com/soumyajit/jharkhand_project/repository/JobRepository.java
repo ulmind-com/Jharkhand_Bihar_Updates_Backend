@@ -18,6 +18,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     Page<Job> findByStatusOrderByCreatedAtDesc(PostStatus status, Pageable pageable);
 
     List<Job> findByAuthorOrderByCreatedAtDesc(User author);
+    org.springframework.data.domain.Page<Job> findByAuthorOrderByCreatedAtDesc(User author, org.springframework.data.domain.Pageable pageable);
     List<Job> findByStatusAndCreatedAtAfterOrderByCreatedAtDesc(PostStatus status, LocalDateTime after);
 
     long countByAuthor(User author);

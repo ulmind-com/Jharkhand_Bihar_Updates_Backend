@@ -27,6 +27,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSp
     Page<Property> findByStatus(PostStatus status, Pageable pageable);
     long countByAuthor(User author);
     List<Property> findByAuthorOrderByCreatedAtDesc(User author);
+    org.springframework.data.domain.Page<Property> findByAuthorOrderByCreatedAtDesc(User author, org.springframework.data.domain.Pageable pageable);
 
     Page<Property> findByStatusOrderByCreatedAtDesc(PostStatus status, Pageable pageable);
 

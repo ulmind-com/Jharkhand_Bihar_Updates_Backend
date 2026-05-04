@@ -120,6 +120,24 @@ public class UserService {
         return content;
     }
 
+    public org.springframework.data.domain.Page<?> getUserPostsByCategory(User user, String category, int page, int size) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by("createdAt").descending());
+
+        return switch (category) {
+            case "stateNews" -> stateNewsRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(news -> modelMapper.map(news, StateNewsDto.class));
+            case "events" -> eventRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(event -> modelMapper.map(event, EventDto.class));
+            case "jobs" -> jobRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(job -> modelMapper.map(job, JobDto.class));
+            case "community" -> communityPostRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(post -> modelMapper.map(post, CommunityPostDto.class));
+            case "properties" -> propertyRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(property -> modelMapper.map(property, PropertyDto.class));
+            default -> throw new IllegalArgumentException("Invalid category: " + category);
+        };
+    }
+
     @Transactional
     public void updateOnesignalPlayerId(User user, String playerId) {
         user.setOnesignalPlayerId(playerId);

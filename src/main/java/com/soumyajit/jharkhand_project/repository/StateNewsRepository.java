@@ -21,6 +21,7 @@ public interface StateNewsRepository extends JpaRepository<StateNews, Long> {
 
 
     List<StateNews> findByAuthorOrderByCreatedAtDesc(User author);
+    Page<StateNews> findByAuthorOrderByCreatedAtDesc(User author, Pageable pageable);
 
     @Query("SELECT sn FROM StateNews sn WHERE sn.state.name = :stateName AND sn.published = true ORDER BY sn.createdAt DESC")
     List<StateNews> findByStateNameAndPublishedTrue(@Param("stateName") String stateName);

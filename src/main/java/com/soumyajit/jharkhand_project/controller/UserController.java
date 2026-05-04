@@ -63,6 +63,16 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("User content retrieved successfully", content));
     }
 
+    @GetMapping("/my-posts")
+    public ResponseEntity<ApiResponse<org.springframework.data.domain.Page<?>>> getMyPosts(
+            @AuthenticationPrincipal User user,
+            @RequestParam String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        org.springframework.data.domain.Page<?> posts = userService.getUserPostsByCategory(user, category, page, size);
+        return ResponseEntity.ok(ApiResponse.success("User posts retrieved successfully", posts));
+    }
+
     @PutMapping("/onesignal-id")
     public ResponseEntity<ApiResponse<Void>> updateOnesignalPlayerId(
             @RequestBody Map<String, String> request,

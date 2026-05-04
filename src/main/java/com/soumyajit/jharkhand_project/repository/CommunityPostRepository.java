@@ -18,6 +18,7 @@ import java.util.List;
 public interface CommunityPostRepository extends JpaRepository<CommunityPost, Long> {
     List<CommunityPost> findByStatusOrderByCreatedAtDesc(PostStatus status);
     List<CommunityPost> findByAuthorOrderByCreatedAtDesc(User author);
+    org.springframework.data.domain.Page<CommunityPost> findByAuthorOrderByCreatedAtDesc(User author, org.springframework.data.domain.Pageable pageable);
 
     List<CommunityPost> findByStatusAndCreatedAtAfterOrderByCreatedAtDesc(PostStatus status, LocalDateTime after);
 

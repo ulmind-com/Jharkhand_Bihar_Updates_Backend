@@ -14,6 +14,7 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByStatusOrderByCreatedAtDesc(PostStatus status);
     List<Event> findByAuthorOrderByCreatedAtDesc(User author);
+    org.springframework.data.domain.Page<Event> findByAuthorOrderByCreatedAtDesc(User author, org.springframework.data.domain.Pageable pageable);
     List<Event> findByStatus(PostStatus status);
     // Add this method to your EventRepository interface
     List<Event> findByStatusAndCreatedAtAfterOrderByCreatedAtDesc(PostStatus status, LocalDateTime after);
