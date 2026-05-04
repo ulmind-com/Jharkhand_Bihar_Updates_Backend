@@ -121,7 +121,7 @@ public class UserService {
     }
 
     public org.springframework.data.domain.Page<?> getUserPostsByCategory(User user, String category, int page, int size) {
-        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by("createdAt").descending());
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size);
 
         return switch (category) {
             case "stateNews" -> stateNewsRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
