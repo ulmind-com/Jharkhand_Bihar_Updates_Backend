@@ -46,6 +46,20 @@ public class RssFeedService {
                 new FeedConfig("iNext Patna", "https://www.inextlive.com/rss/patna-top-news.xml",
                         FeedType.INEXT, "https://www.google.com/s2/favicons?domain=inextlive.com&sz=128")
         ));
+        STATE_FEEDS.put("West Bengal", List.of(
+                new FeedConfig("ABP Kolkata", "https://bengali.abplive.com/news/kolkata/feed",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=bengali.abplive.com&sz=128"),
+                new FeedConfig("ABP District", "https://bengali.abplive.com/district/feed",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=bengali.abplive.com&sz=128"),
+                new FeedConfig("ABP States", "https://bengali.abplive.com/states/feed",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=bengali.abplive.com&sz=128"),
+                new FeedConfig("Zee 24 Ghanta", "https://zeenews.india.com/bengali/rssfeed/kolkata.xml",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=zeenews.india.com&sz=128"),
+                new FeedConfig("Sangbad Pratidin", "https://www.sangbadpratidin.in/feed/",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=sangbadpratidin.in&sz=128"),
+                new FeedConfig("Sangbad Bengal", "https://www.sangbadpratidin.in/category/bengal/feed/",
+                        FeedType.STANDARD_RSS, "https://www.google.com/s2/favicons?domain=sangbadpratidin.in&sz=128")
+        ));
     }
 
     // ─── In-memory Cache ──────────────────────────────────────────────────────
@@ -210,6 +224,23 @@ public class RssFeedService {
                 // iNext uses custom <img> tag
                 imageUrl = getElementText(itemEl, "img");
                 break;
+            case STANDARD_RSS:
+                // Bengali feeds (ABP, Zee, Sangbad) — try multiple image sources
+                imageUrl = getMediaContentUrl(itemEl);  // Try media:content first
+                if (imageUrl == null || imageUrl.isEmpty()) {
+                    // Try <enclosure type="image/...">
+                    imageUrl = getEnclosureImageUrl(itemEl);
+                }
+                if (imageUrl == null || imageUrl.isEmpty()) {
+                    // Try extracting <img src="..."> from description HTML
+                    imageUrl = extractImageFromHtml(description);
+                }
+                // Author from <dc:creator>
+                author = getElementTextNS(itemEl, "http://purl.org/dc/elements/1.1/", "creator");
+                if (author == null || author.isEmpty()) {
+                    author = getElementText(itemEl, "author");
+                }
+                break;
         }
 
         // Parse date
@@ -257,6 +288,37 @@ public class RssFeedService {
         return null;
     }
 
+    /**
+     * Extract image URL from <enclosure type="image/..."> tag.
+     */
+    private String getEnclosureImageUrl(Element parent) {
+        NodeList enclosureNodes = parent.getElementsByTagName("enclosure");
+        for (int i = 0; i < enclosureNodes.getLength(); i++) {
+            Element encEl = (Element) enclosureNodes.item(i);
+            String type = encEl.getAttribute("type");
+            if (type != null && type.startsWith("image")) {
+                String url = encEl.getAttribute("url");
+                if (url != null && !url.isEmpty()) return url;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Extract first <img src="..."> from HTML content (e.g., embedded in <description>).
+     */
+    private String extractImageFromHtml(String html) {
+        if (html == null || html.isEmpty()) return null;
+        // Match <img ... src="URL" ... />
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
+                "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"]"  , java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
     private String getMediaContentUrl(Element parent) {
         // Try media:content first
         NodeList mediaNodes = parent.getElementsByTagNameNS("http://search.yahoo.com/mrss/", "content");
@@ -282,7 +344,11 @@ public class RssFeedService {
     private LocalDateTime parseDate(String dateStr) {
         if (dateStr == null || dateStr.isBlank()) return null;
 
-        dateStr = dateStr.trim();
+        // Strip CDATA wrapper if present (Zee News Bengali uses <![CDATA[...]]>)
+        dateStr = dateStr.trim()
+                .replaceAll("<!\\[CDATA\\[", "")
+                .replaceAll("\\]\\]>", "")
+                .trim();
 
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
             try {
@@ -302,15 +368,25 @@ public class RssFeedService {
         String lower = stateName.trim().toLowerCase();
         if (lower.equals("jharkhand")) return "Jharkhand";
         if (lower.equals("bihar")) return "Bihar";
-        // Capitalize first letter
-        return stateName.substring(0, 1).toUpperCase() + stateName.substring(1).toLowerCase();
+        if (lower.equals("west bengal")) return "West Bengal";
+        // Capitalize first letter of each word
+        String[] words = stateName.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                if (sb.length() > 0) sb.append(" ");
+                sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1).toLowerCase());
+            }
+        }
+        return sb.toString();
     }
 
     // ─── Inner Classes ────────────────────────────────────────────────────────
 
     private enum FeedType {
-        MEDIA_RSS,  // News18 style (uses media:content for images)
-        INEXT       // iNext style (uses custom <img> tag)
+        MEDIA_RSS,      // News18 style (uses media:content for images)
+        INEXT,          // iNext style (uses custom <img> tag)
+        STANDARD_RSS    // Standard RSS 2.0 (ABP, Zee, Sangbad Pratidin — Bengali feeds)
     }
 
     private static class FeedConfig {
