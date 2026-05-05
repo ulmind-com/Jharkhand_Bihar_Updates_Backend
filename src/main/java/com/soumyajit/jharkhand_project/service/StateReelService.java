@@ -96,7 +96,7 @@ public class StateReelService {
                 .videoUrl(reel.getVideoUrl())
                 .thumbnailUrl(reel.getThumbnailUrl())
                 .author(reel.getAuthor().getUsername())
-                .sourceName("Jharkhand Bihar Updates")
+                .sourceName(reel.getAuthor().getFirstName() + " " + reel.getAuthor().getLastName())
                 .publishedAt(reel.getCreatedAt())
                 .stateName(reel.getState().getName())
                 .type("NATIVE_MP4")
