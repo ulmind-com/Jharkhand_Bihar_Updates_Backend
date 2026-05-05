@@ -20,4 +20,6 @@ public interface StateReelRepository extends JpaRepository<StateReel, Long> {
 
     @Query("SELECT r FROM StateReel r WHERE r.state.name = :stateName AND r.published = true ORDER BY r.createdAt DESC")
     Page<StateReel> findByStateNameAndPublishedTrue(@Param("stateName") String stateName, Pageable pageable);
+
+    Page<StateReel> findByAuthorOrderByCreatedAtDesc(com.soumyajit.jharkhand_project.entity.User author, Pageable pageable);
 }

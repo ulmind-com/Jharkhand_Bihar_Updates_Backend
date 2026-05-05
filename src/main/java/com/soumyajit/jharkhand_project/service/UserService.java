@@ -29,7 +29,8 @@ public class UserService {
     private final NotificationRepository notificationRepository;
     private final ModelMapper modelMapper;
     private final ImageUploadService imageUploadService;
-    private final PropertyRepository propertyRepository;  // ✅ Already imported
+    private final PropertyRepository propertyRepository;
+    private final StateReelRepository stateReelRepository;
 
     public UserProfileDto getUserProfile(User user) {
         User currentUser = userRepository.findById(user.getId())
@@ -134,6 +135,8 @@ public class UserService {
                     .map(post -> modelMapper.map(post, CommunityPostDto.class));
             case "properties" -> propertyRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
                     .map(property -> modelMapper.map(property, PropertyDto.class));
+            case "reels" -> stateReelRepository.findByAuthorOrderByCreatedAtDesc(user, pageable)
+                    .map(reel -> modelMapper.map(reel, com.soumyajit.jharkhand_project.dto.ReelItemDto.class));
             default -> throw new IllegalArgumentException("Invalid category: " + category);
         };
     }
