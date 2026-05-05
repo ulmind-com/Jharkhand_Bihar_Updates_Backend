@@ -152,7 +152,8 @@ public class YouTubeReelService {
         if (publishedStr != null) {
             try {
                 ZonedDateTime zdt = ZonedDateTime.parse(publishedStr, DateTimeFormatter.ISO_DATE_TIME);
-                publishedAt = zdt.toLocalDateTime();
+                // Convert UTC YouTube time to IST (Asia/Kolkata) to perfectly sync with Admin DB timestamps
+                publishedAt = zdt.withZoneSameInstant(ZoneId.of("Asia/Kolkata")).toLocalDateTime();
             } catch (Exception e) {
                 log.debug("Could not parse YouTube date: {}", publishedStr);
             }
